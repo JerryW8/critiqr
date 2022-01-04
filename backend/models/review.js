@@ -8,14 +8,6 @@ const reviewSchema = new Schema({
     minLength: 10,
     required: true
   },
-  votes: {
-    type: Number,
-    min: 0
-  },
-  parent: {
-    type: Schema.Types.ObjectId,
-    ref: 'Resume'
-  },
 }, {
   timestamps: true
 })
