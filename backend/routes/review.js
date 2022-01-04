@@ -1,8 +1,7 @@
 const express = require('express')
 const router = express.Router({ mergeParams: true })
-const mongoose = require('mongoose')
 const Resume = require('../models/resume.js')
-const Review = require('../models/resume.js')
+const Review = require('../models/review.js')
 
 router.post('/', async (req, res) => {
   try {
@@ -10,8 +9,8 @@ router.post('/', async (req, res) => {
     const resume = await Resume.findById(req.params.id)
 
     // create new review
-    const review = new Review(req.body.review)
-
+    const review = new Review(req.body)
+    console.log(resume)
     // add new review to list of reviews
     resume.reviews.push(review)
 

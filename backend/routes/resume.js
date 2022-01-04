@@ -27,7 +27,7 @@ router.get('/field/:field', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params
   try {
-    const resume = await Resume.findById(id)
+    const resume = await Resume.findById(id).populate('reviews')
     res.status(200).send(resume)
   } catch (e) {
     res.status(404).send(e.message)

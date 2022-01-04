@@ -8,22 +8,19 @@ const ResumeFileSchema = new Schema({
 })
 
 const ResumeSchema = new Schema ({
-  title: String,
-  // {
-  //   type: String,
-  //   minLength: 3,
-  //   required: true
-  // },
-  description: String,
-  // {
-  //   type: String,
-  //   default: ''
-  // },
-  field: Number,
-  // {
-  //   type: Number,
-  //   required: true
-  // },
+  title: {
+    type: String,
+    minLength: 3,
+    required: true
+  },
+  description: {
+    type: String,
+    default: ''
+  },
+  field: {
+    type: Number,
+    required: true
+  },
   file: ResumeFileSchema,
   reviews: [
     {
