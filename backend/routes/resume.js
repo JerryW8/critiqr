@@ -7,7 +7,12 @@ const Resume = require('../models/resume.js')
 
 router.get('/', async (req, res) => {
   try {
-    const resumes = await Resume.find()
+    let resumes = []
+    if (req.query.q) {
+      resumes = await Resume.find({ $text: { $search: req.query.q } })
+    } else {
+      resumes = await Resume.find()
+    }
     res.status(200).send(resumes)
   } catch (e) {
     res.status(404).send(e.message)
@@ -75,35 +80,20 @@ router.put('/:id', upload.single("file"), async (req, res) => {
     
     await resume.save()
     res.status(200).send(resume)
-
-    
-    // // if there is a file uploaded
-    // if (req.file) {
-    //   // delete image from cloudinary
-    //   await cloudinary.uploader.destroy(resume.file.cid)
-
-    //   // upload new image to cloudinary
-    //   let result = await cloudinary.uploader.upload(req.file.path)
-
-    //   updatedResume.file = {url: result.secure_url, cid: result.public_id}
-    // } else {
-    //   updatedResume.file = resume.file
-    // }
-
-    // await Resume.findByIdAndUpdate(req.params.id, updatedResume, { new: true })
   } catch (e) {
     res.status(404).send(e.message)
   }
 })
 
 router.delete('/:id', async (req, res) => {
+  const { id } = req.params.id
   try {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res.status(404).send(`No post with id: ${req.params.id}`)
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).send(`No post with id: ${id}`)
     }
 
     // find resume by id and delete it
-    const resume = await Resume.findByIdAndDelete(req.params.id)
+    const resume = await Resume.findByIdAndDelete(id)
 
     // delete resume from cloudinary
     await cloudinary.uploader.destroy(resume.file.cid)

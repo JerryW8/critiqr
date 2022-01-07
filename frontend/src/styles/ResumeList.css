@@ -1,0 +1,23 @@
+.search-bar {
+  width: 35vw;
+  height: 5.5vh;
+  border-width: 3.5px;
+  border-color: black;
+  border-radius: 10px;
+  margin-top: 30px;
+  background-color: white;
+  padding-left: 5px;
+}
+
+.resume-list {
+  margin-top: 30px;
+}
+
+.resume-card {
+  margin: 0 auto;
+}
+
+.resume-card:hover {
+  background-color: rgb(212, 212, 212);
+  cursor: pointer;
+}

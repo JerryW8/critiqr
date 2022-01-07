@@ -32,6 +32,8 @@ const ResumeSchema = new Schema ({
   timestamps: true
 })
 
+ResumeSchema.index({ title: "text" })
+
 ResumeSchema.post('findByIdAndDelete', async function(doc) {
   if (doc) {
     await Review.deleteMany({
