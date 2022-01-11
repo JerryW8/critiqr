@@ -13,13 +13,13 @@ const ResumeList = props => {
       <div>
         <input type="input" className="search-bar" placeholder="Seach (ex. Software developer resume)"></input>
       </div>
-        <div className="resume-list">
-          <div className="card w-50 resume-card">
-            <div className="card-body" style={{ textAlign: "left" }}>
-              <h5 className="card-title">Card title</h5>
-            </div>
+      <div className="resume-list">
+        <div className="card w-50 resume-card">
+          <div className="card-body" style={{ textAlign: "left" }}>
+            <h5 className="card-title">Card title</h5>
           </div>
         </div>
+      </div>
     </div>
   )
 }
