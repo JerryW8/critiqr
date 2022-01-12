@@ -1,7 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const { upload, s3 } = require("../utils/s3.js")
+const multer = require('multer')
+const upload = multer({ storage: multer.diskStorage({}) })
+
+const { s3, uploadFile } = require("../utils/s3.js")
 const Resume = require('../models/resume.js')
 
 router.get('/', async (req, res) => {
@@ -41,12 +44,14 @@ router.get('/:id', async (req, res) => {
 router.post('/', upload.single("file"), async (req, res) => {
   const { title, description } = req.body
   try {
+    const awsRes = await uploadFile(req.file)
+
     // create new resume
     let resume = new Resume({
       title: title,
       description: description,
-      file: req.file.location,
-      awsKey: req.file.key
+      file: awsRes.Location,
+      awsKey: awsRes.Key
     })
 
     await resume.save()
@@ -57,24 +62,40 @@ router.post('/', upload.single("file"), async (req, res) => {
 })
 
 router.put('/:id', upload.single("file"), async (req, res) => {
-  const { title, description, awsKey } = req.body
-  const { id } = req.params.id
+  const { title, description } = req.body
+  const { id } = req.params
   try {
+    console.log(id)
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).send(`No post with id: ${id}`)
     }
 
-    // delete file from aws
-    const params = { Bucket: process.env.AWS_BUCKET_NAME, Key: awsKey }
-    await s3.deleteObject(params).promise()
+    let resume = {}
+    if (req.file) {
+      // find S3 key to delete old file
+      const { awsKey } = await Resume.findById(id)
 
-    // update the resume in the database
-    const resume = await Resume.findByIdAndUpdate(id, { 
-      title: title,
-      description: description,
-      file: req.file.location,
-      awsKey: req.file.key
-    })
+      // delete file from aws
+      const params = { Bucket: process.env.AWS_BUCKET_NAME, Key: awsKey }
+      await s3.deleteObject(params).promise()
+
+      // upload new file to aws
+      const awsRes = await uploadFile(req.file)
+
+      // update resume in the database
+      resume = await Resume.findByIdAndUpdate(id, { 
+        title: title,
+        description: description,
+        file: awsRes.Location,
+        awsKey: awsRes.Key
+      })
+    } else {
+      // update the resume in the database
+      resume = await Resume.findByIdAndUpdate(id, { 
+        title: title,
+        description: description
+      })
+    }
     
     await resume.save()
     res.status(200).send(resume)
@@ -84,7 +105,7 @@ router.put('/:id', upload.single("file"), async (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
-  const { id } = req.params.id
+  const { id } = req.params
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).send(`No post with id: ${id}`)

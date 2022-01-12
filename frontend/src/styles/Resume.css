@@ -2,14 +2,19 @@
   margin: 0 auto;
   margin-top: 30px;
   text-align: left;
-  width: 85%;
+  width: 75%;
 }
 
-.post-title {
+.title {
   font-size: 20px;
   font-weight: 600;
 }
 
 .post-body {
   margin-top: 10px;
+}
+
+.resume-link {
+  color: white;
+  text-decoration: none
 }

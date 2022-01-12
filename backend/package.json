@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/JerryW8/EduExchange#readme",
   "dependencies": {
+    "aws-sdk": "^2.1055.0",
     "cloudinary": "^1.28.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
