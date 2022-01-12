@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 import ResumeList from "./components/ResumeList"
-// import Resume from "./components/Resume"
+import Resume from "./components/Resume"
 import AddResume from "./components/AddResume"
 
 function App() {
@@ -22,10 +22,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<ResumeList/>} />
           <Route path="/create" element={<AddResume/>} />
-          {/* <Route
-            path="/resumes/:id"
-            render={(props) => <Resume {...props} /> }
-          /> */}
+          <Route path="/resumes/:id" element={<Resume/>} />
         </Routes>
       </div>
     </Router>
