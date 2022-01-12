@@ -2,11 +2,6 @@ const mongoose = require('mongoose')
 const Review = require('./review')
 const Schema = mongoose.Schema
 
-const ResumeFileSchema = new Schema({
-  url: String,
-  cid: String
-})
-
 const ResumeSchema = new Schema ({
   title: {
     type: String,
@@ -17,11 +12,8 @@ const ResumeSchema = new Schema ({
     type: String,
     default: ''
   },
-  field: {
-    type: Number,
-    required: true
-  },
-  file: ResumeFileSchema,
+  file: String,
+  awsKey: String,
   reviews: [
     {
       type: Schema.Types.ObjectId,

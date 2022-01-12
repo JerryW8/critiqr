@@ -1,8 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const cloudinary = require("../utils/cloudinary")
 const mongoose = require('mongoose')
-const upload = require("../utils/multer")
+const { upload, s3 } = require("../utils/s3.js")
 const Resume = require('../models/resume.js')
 
 router.get('/', async (req, res) => {
@@ -40,16 +39,15 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', upload.single("file"), async (req, res) => {
+  const { title, description } = req.body
   try {
-    // upload resume file to cloudinary
-    const result = await cloudinary.uploader.upload(req.file.path)
-
-    // create new file
-    let resumeFile = {url: result.secure_url, cid: result.public_id}
-
     // create new resume
-    let resume = new Resume(req.body)
-    resume.file = resumeFile
+    let resume = new Resume({
+      title: title,
+      description: description,
+      file: req.file.location,
+      awsKey: req.file.key
+    })
 
     await resume.save()
     res.status(201).send(resume)
@@ -59,24 +57,24 @@ router.post('/', upload.single("file"), async (req, res) => {
 })
 
 router.put('/:id', upload.single("file"), async (req, res) => {
+  const { title, description, awsKey } = req.body
+  const { id } = req.params.id
   try {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res.status(404).send(`No post with id: ${req.params.id}`)
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).send(`No post with id: ${id}`)
     }
 
-    // get resume to be deleted
-    const resume = await Resume.findByIdAndUpdate(req.params.id, { ...req.body })
+    // delete file from aws
+    const params = { Bucket: process.env.AWS_BUCKET_NAME, Key: awsKey }
+    await s3.deleteObject(params).promise()
 
-    // if there is a file, update the file
-    if (req.file) {
-      // delete image from cloudinary
-      await cloudinary.uploader.destroy(resume.file.cid)
-
-      // upload new image to cloudinary
-      let result = await cloudinary.uploader.upload(req.file.path)
-
-      await Resume.findByIdAndUpdate(req.params.id, { file: { url: result.secure_url, cid: result.public_id } })
-    }
+    // update the resume in the database
+    const resume = await Resume.findByIdAndUpdate(id, { 
+      title: title,
+      description: description,
+      file: req.file.location,
+      awsKey: req.file.key
+    })
     
     await resume.save()
     res.status(200).send(resume)
@@ -95,8 +93,9 @@ router.delete('/:id', async (req, res) => {
     // find resume by id and delete it
     const resume = await Resume.findByIdAndDelete(id)
 
-    // delete resume from cloudinary
-    await cloudinary.uploader.destroy(resume.file.cid)
+    // delete file from aws
+    const params = { Bucket: process.env.AWS_BUCKET_NAME, Key: resume.awsKey }
+    await s3.deleteObject(params).promise()
 
     res.status(200).send(resume)
   } catch (e) {
