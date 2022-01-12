@@ -4,6 +4,7 @@ import './App.css';
 import ResumeList from "./components/ResumeList"
 import Resume from "./components/Resume"
 import AddResume from "./components/AddResume"
+// import EditResume from "./components/EditResume"
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/" element={<ResumeList/>} />
           <Route path="/create" element={<AddResume/>} />
           <Route path="/resumes/:id" element={<Resume/>} />
+          {/* <Route path="/resumes/:id/edit" element={<EditResume />} /> */}
         </Routes>
       </div>
     </Router>

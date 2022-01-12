@@ -18,6 +18,7 @@ const ResumeForm = (props) => {
             className="form-control"
             placeholder="ex. Seeking software developer internship"
             type="text"
+            maxLength="140"
             name="title"
             value={props.data.name}
             onChange={e => handleChange("title", e)} 
@@ -35,7 +36,7 @@ const ResumeForm = (props) => {
           />
         </label>
         <select 
-          class="form-select"
+          className="form-select"
         >
           <option disabled selected>Choose the field of jobs you are applying for</option>
         </select>

@@ -10,14 +10,27 @@
 }
 
 .resume-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
   margin-top: 30px;
 }
 
 .resume-card {
   margin: 0 auto;
+  text-align: left;
 }
 
 .resume-card:hover {
   background-color: rgb(212, 212, 212);
   cursor: pointer;
+}
+
+.resume-title {
+  color: black;
+  text-decoration: none;
+}
+
+.resume-title:hover {
+  color: black;
 }

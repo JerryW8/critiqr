@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from "react"
+import { useLocation } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css'
 import "../styles/ResumeForm.css"
 import "../styles/Resume.css"
 
 const Resume = (props) => {
+
+  const [review, setReview] = useState()
+
   return (
-    <div>
-      <div className="resume-post card">
+    <div className="resume-post">
+      <div className="edit-delete">
+        <button className="btn btn-primary">
+          <b>Edit</b>
+        </button>
+        <button className="btn btn-danger">
+          <b>Delete</b>
+        </button>
+      </div>
+      <div className="card">
         <div className="card-body">
           <span className="title">Critique my resume</span>
           <p className="post-body">
@@ -15,14 +27,28 @@ const Resume = (props) => {
           <a className="btn btn-primary" href="https://app-aws-bucket.s3.amazonaws.com/sample.pdf"><b>View Resume</b></a>
         </div>
       </div>
-      <div className="resume-post card">
+      <div className="card">
         <div className="card-body">
-          <span className="title">Critiques ()</span>
-          <hr />
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam enim dui, sodales vitae placerat id, vestibulum quis magna. Morbi dignissim mi non est fringilla pharetra vitae id dui. Morbi interdum justo ante, a iaculis metus fermentum
-          <hr />
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam enim dui, sodales vitae placerat id, vestibulum quis magna. Morbi dignissim mi non est fringilla pharetra vitae id dui. Morbi interdum justo ante, a iaculis metus fermentum
-          <hr />
+          <span className="title">Leave a critique</span>
+          <textarea 
+            className="form-control comment"
+            placeholder="How to improve this resume?"
+            value={review}
+            onChange={e => setReview(e.target.value)}
+          />
+          <button className="btn btn-success"><b>POST</b></button>
+        </div>
+      </div>
+      <div className="critiques">
+        <div className="card">
+          <div className="card-body">
+            <span className="title">Critiques ()</span>
+            <hr />
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam enim dui, sodales vitae placerat id, vestibulum quis magna. Morbi dignissim mi non est fringilla pharetra vitae id dui. Morbi interdum justo ante, a iaculis metus fermentum
+            <hr />
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam enim dui, sodales vitae placerat id, vestibulum quis magna. Morbi dignissim mi non est fringilla pharetra vitae id dui. Morbi interdum justo ante, a iaculis metus fermentum
+            <hr />
+          </div>
         </div>
       </div>
     </div>
