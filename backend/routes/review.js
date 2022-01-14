@@ -6,7 +6,7 @@ const Review = require('../models/review.js')
 router.post('/', async (req, res) => {
   try {
     // get resume the review belongs to
-    const resume = await Resume.findById(req.params.id)
+    const resume = await Resume.findById(req.params.id).populate('reviews')
 
     // create new review
     const review = new Review(req.body)

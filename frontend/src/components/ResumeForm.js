@@ -20,7 +20,7 @@ const ResumeForm = (props) => {
             type="text"
             maxLength="140"
             name="title"
-            value={props.data.name}
+            value={props.data.title}
             onChange={e => handleChange("title", e)} 
           />
         </label>

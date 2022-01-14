@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.get('/field/:field', async (req, res) => {
+router.get('/:field', async (req, res) => {
   const { field } = req.params
   try {
     const resumes = await Resume.find({ field: field })

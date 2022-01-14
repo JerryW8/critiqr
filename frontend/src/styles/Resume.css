@@ -43,3 +43,17 @@
   justify-content: flex-end;
   column-gap: 5px;
 }
+
+.action-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.edit-delete {
+  margin-left: auto;
+}
+
+.delete-review {
+  display: flex;
+  justify-content: flex-end;
+}
