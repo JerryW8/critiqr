@@ -42,6 +42,7 @@
   flex-direction: column;
   row-gap: 10px;
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .resume-card {

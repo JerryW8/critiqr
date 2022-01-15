@@ -21,16 +21,6 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.get('/:field', async (req, res) => {
-  const { field } = req.params
-  try {
-    const resumes = await Resume.find({ field: field })
-    res.status(200).send(resumes)
-  } catch (e) {
-    res.status(404).send(e.message)
-  }
-})
-
 router.get('/:id', async (req, res) => {
   const { id } = req.params
   try {

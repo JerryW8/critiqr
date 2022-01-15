@@ -21,7 +21,8 @@ const Resume = () => {
     axios.get('http://localhost:8080/resume/' + id)
       .then(res => {
         console.log(res.data)
-        setResume(res.data)})
+        setResume(res.data)
+      })
       .catch(e => console.log(e))
   }
 

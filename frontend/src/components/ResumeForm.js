@@ -49,7 +49,7 @@ const ResumeForm = (props) => {
             onChange={e => handleChange("file", e)}
           />
         </label>
-        <button type="submit" className="btn btn-success submit"><b>{props.buttonLabel}</b></button>
+        <button type="submit" className="btn btn-success submit" onClick={props.submitForm}><b>{props.buttonLabel}</b></button>
       </div>
     </div>
   )
