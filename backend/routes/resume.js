@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const multer = require('multer')
 const upload = multer({ storage: multer.diskStorage({}) })
 
-const { s3, uploadFile } = require("../utils/s3.js")
+const { s3, uploadFile,getFileStream } = require("../utils/s3.js")
 const Resume = require('../models/resume.js')
 
 router.get('/', async (req, res) => {
@@ -29,6 +29,12 @@ router.get('/:id', async (req, res) => {
   } catch (e) {
     res.status(404).send(e.message)
   }
+})
+
+router.get('/file/:key', async (req, res) => {
+  const { key } = req.params
+  const readStream = getFileStream(key)
+  readStream.pipe(res)
 })
 
 router.post('/', upload.single("file"), async (req, res) => {

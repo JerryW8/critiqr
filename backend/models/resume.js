@@ -12,8 +12,7 @@ const ResumeSchema = new Schema ({
     type: String,
     default: ''
   },
-  file: String,
-  awsKey: String,
+  key: String,
   reviews: [
     {
       type: Schema.Types.ObjectId,

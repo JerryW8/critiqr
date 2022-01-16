@@ -38,7 +38,6 @@ const ResumeForm = (props) => {
         <select 
           className="form-select"
         >
-          <option disabled selected>Choose the field of jobs you are applying for</option>
         </select>
         <label className="input-label">
           <div className="input-header">Upload Resume</div>

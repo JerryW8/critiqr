@@ -89,7 +89,7 @@ const Resume = () => {
             {resume.description}
           </p>
           <div className="action-buttons">
-            <a className="btn btn-success" href="https://app-aws-bucket.s3.amazonaws.com/sample.pdf"><b>View Resume</b></a>
+            <a className="btn btn-success" href={resume.file}><b>View Resume</b></a>
             <div className="edit-delete">
               <Link to={`/resumes/${id}/edit`} state={{ resume: resume }} className="edit btn btn-primary">
                 <b>Edit</b>

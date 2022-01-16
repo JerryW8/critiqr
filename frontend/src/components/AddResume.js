@@ -11,7 +11,6 @@ const AddResume = () => {
   const [data, setData] = useState({
     title: "",
     description: "",
-    field: 0,
     file: "",
   })
 
@@ -19,7 +18,6 @@ const AddResume = () => {
     let resumeForm = new FormData()
     resumeForm.append("title", data.title)
     resumeForm.append("description", data.description)
-    resumeForm.append("field", 0)
     resumeForm.append("file", data.file)
 
     axios({

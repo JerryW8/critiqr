@@ -13,17 +13,15 @@ const AddResume = () => {
   const [data, setData] = useState({
     title: "",
     description: "",
-    field: 0,
     file: "",
   })
 
   useEffect(() => {
     if (location.state) {
-      const { title, description, field, file } = location.state.resume
+      const { title, description, file } = location.state.resume
       setData({
         title: title,
         description: description,
-        field: field,
         file: file
       })
     } else {
@@ -34,11 +32,10 @@ const AddResume = () => {
   function getResume() {
     axios.get('http://localhost:8080/resume/' + id)
     .then(res => {
-      const { title, description, field, file } = res.data
+      const { title, description, file } = res.data
       setData({
         title: title,
         description: description,
-        field: field,
         file: file
       })
     })
@@ -49,7 +46,6 @@ const AddResume = () => {
     let resumeForm = new FormData()
     resumeForm.append("title", data.title)
     resumeForm.append("description", data.description)
-    resumeForm.append("field", 0)
     resumeForm.append("file", data.file)
 
     axios({
