@@ -35,10 +35,6 @@ const ResumeForm = (props) => {
             onChange={e => handleChange("description", e)}
           />
         </label>
-        <select 
-          className="form-select"
-        >
-        </select>
         <label className="input-label">
           <div className="input-header">Upload Resume</div>
           <input 

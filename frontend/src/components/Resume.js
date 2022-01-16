@@ -72,6 +72,12 @@ const Resume = () => {
     // })
   }
 
+  function downloadResume() {
+    axios.get('http://localhost:8080/resume/file/' + resume.key)
+    .then(res => { console.log(res.data) })
+    .catch(e => { console.log(e) })
+  }
+
   function handleReviewPost() {
     const review = {
       text: reviewText
@@ -89,7 +95,9 @@ const Resume = () => {
             {resume.description}
           </p>
           <div className="action-buttons">
-            <a className="btn btn-success" href={resume.file}><b>View Resume</b></a>
+            <button className="btn btn-success" onClick={downloadResume}>
+              <b>View Resume</b>
+            </button>
             <div className="edit-delete">
               <Link to={`/resumes/${id}/edit`} state={{ resume: resume }} className="edit btn btn-primary">
                 <b>Edit</b>

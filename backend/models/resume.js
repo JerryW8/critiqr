@@ -5,7 +5,6 @@ const Schema = mongoose.Schema
 const ResumeSchema = new Schema ({
   title: {
     type: String,
-    minLength: 3,
     required: true
   },
   description: {

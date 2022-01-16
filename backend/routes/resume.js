@@ -47,7 +47,7 @@ router.post('/', upload.single("file"), async (req, res) => {
       title: title,
       description: description,
       file: awsRes.Location,
-      awsKey: awsRes.Key
+      key: awsRes.Key
     })
 
     await resume.save()
@@ -69,10 +69,10 @@ router.put('/:id', upload.single("file"), async (req, res) => {
     let resume = {}
     if (req.file) {
       // find S3 key to delete old file
-      const { awsKey } = await Resume.findById(id)
+      const { key } = await Resume.findById(id)
 
       // delete file from aws
-      const params = { Bucket: process.env.AWS_BUCKET_NAME, Key: awsKey }
+      const params = { Bucket: process.env.AWS_BUCKET_NAME, Key: key }
       await s3.deleteObject(params).promise()
 
       // upload new file to aws
@@ -83,7 +83,7 @@ router.put('/:id', upload.single("file"), async (req, res) => {
         title: title,
         description: description,
         file: awsRes.Location,
-        awsKey: awsRes.Key
+        key: awsRes.Key
       })
     } else {
       // update the resume in the database
@@ -111,7 +111,7 @@ router.delete('/:id', async (req, res) => {
     const resume = await Resume.findByIdAndDelete(id)
 
     // delete file from aws
-    const params = { Bucket: process.env.AWS_BUCKET_NAME, Key: resume.awsKey }
+    const params = { Bucket: process.env.AWS_BUCKET_NAME, Key: resume.key }
     await s3.deleteObject(params).promise()
 
     res.status(200).send(resume)
