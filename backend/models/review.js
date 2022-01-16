@@ -5,7 +5,6 @@ const Schema = mongoose.Schema
 const reviewSchema = new Schema({
   text: {
     type: String,
-    minLength: 10,
     required: true
   },
 }, {

@@ -1,6 +1,5 @@
 const aws = require('aws-sdk')
 const fs = require('fs')
-const { v4: uuidv4 } = require('uuid');
 
 const s3 = new aws.S3({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -15,21 +14,32 @@ function uploadFile(file) {
   const uploadParams = {
     Bucket: process.env.AWS_BUCKET_NAME,
     Body: fileStream,
-    Key: uuidv4()
+    Key: file.filename,
+    ContentType: 'application/pdf'
   }
 
   return s3.upload(uploadParams).promise()
 }
 
-// downloads a file from s3 by key
-function getFileStream(fileKey) {
-  const downloadParams = {
+// get presigned URL
+function getURL(fileKey) {
+  const urlParams = {
     Key: fileKey,
-    Bucket: process.env.AWS_BUCKET_NAME
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Expires: 1000
   }
 
-  return s3.getObject(downloadParams).createReadStream()
+  return s3.getSignedUrl('getObject', urlParams)
 }
 
+// downloads a file from s3 by key
+// function getFileStream(fileKey) {
+//   const downloadParams = {
+//     Key: fileKey,
+//     Bucket: process.env.AWS_BUCKET_NAME
+//   }
 
-module.exports = { s3: s3, uploadFile: uploadFile, getFileStream: getFileStream }
+//   return s3.getObject(downloadParams).createReadStream()
+// }
+
+module.exports = { s3: s3, uploadFile: uploadFile, getURL: getURL }

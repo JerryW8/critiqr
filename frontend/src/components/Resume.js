@@ -59,22 +59,15 @@ const Resume = () => {
     })
     .then(res => setResume({...res.data}))
     .catch(e => console.log(e))
-    // fetch(`http://localhost:8080/resume/${id}/review/`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(review)
-    // })
-    // .then(res => res.json())
-    // .then(data => {
-    //   setResume({...data})
-    // })
   }
 
-  function downloadResume() {
+  function resumeLink() {
     axios.get('http://localhost:8080/resume/file/' + resume.key)
-    .then(res => { console.log(res.data) })
+    .then(res => {
+      console.log(res.data)
+      console.log(res.data.url)
+      window.open(res.data.url, '_blank')
+    })
     .catch(e => { console.log(e) })
   }
 
@@ -95,7 +88,7 @@ const Resume = () => {
             {resume.description}
           </p>
           <div className="action-buttons">
-            <button className="btn btn-success" onClick={downloadResume}>
+            <button className="btn btn-success" onClick={resumeLink}>
               <b>View Resume</b>
             </button>
             <div className="edit-delete">

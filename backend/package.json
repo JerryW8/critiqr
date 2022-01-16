@@ -1,21 +1,21 @@
 {
-  "name": "eduexchange",
+  "name": "critiqr",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JerryW8/EduExchange.git"
+    "url": "git+https://github.com/JerryW8/critiqr.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JerryW8/EduExchange/issues"
+    "url": "https://github.com/JerryW8/critiqr/issues"
   },
-  "homepage": "https://github.com/JerryW8/EduExchange#readme",
+  "homepage": "https://github.com/JerryW8/critiqr#readme",
   "dependencies": {
     "aws-sdk": "^2.1055.0",
     "cloudinary": "^1.28.0",
